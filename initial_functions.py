@@ -6,7 +6,7 @@ from animal_classes import Herbivore, Carnivore
 from food_classes import Meat, Plant
 
 
-def reading_initial_data_and_creating_objects():
+def initialize_data_and_create_objects():
 
     with open('initial_data.txt') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -33,42 +33,35 @@ def reading_initial_data_and_creating_objects():
 
             for key, value in board.objects_on_board.items():
                 # if value['kind'] != 'X':
-                print(key, value)
+                print(key, value, value.pk)
 
-
-def find_free_pk(board):
-    i = 1
-    while True:
-        if i not in board.objects_on_board.keys():
-            return i
-        i += 1
+            return board
 
 
 def create_a_food(board, kind):
-    pk = find_free_pk(board)
+    pk = board.find_free_pk()
     x = random.randint(1, board.size)
     y = random.randint(1, board.size)
 
     if kind == 'meat':
-        food = Meat(pk, (x, y), kind)
+        food = Meat(pk, (x, y))
         board.add_object_to_board(food)
 
     elif kind == 'plant':
-        food = Plant(pk, (x, y), kind)
+        food = Plant(pk, (x, y))
         board.add_object_to_board(food)
 
 
 def create_an_animal(board, kind):
 
-    pk = find_free_pk(board)
+    pk = board.find_free_pk()
     x = random.randint(1, board.size)
     y = random.randint(1, board.size)
 
     if kind == 'carnivore':
-        animal = Carnivore(pk, (x, y), kind)
+        animal = Carnivore(pk, (x, y))
         board.add_object_to_board(animal)
 
     elif kind == 'herbivore':
-        animal = Herbivore(pk, (x, y), kind)
+        animal = Herbivore(pk, (x, y))
         board.add_object_to_board(animal)
-

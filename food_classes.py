@@ -1,33 +1,39 @@
 import random
 
+from board_classes import EmptyObject
 
-class Food:
 
-    def __init__(self, pk, position, kind):
-        self.pk = pk
-        self.position = position
-        self.kind = kind
-        self.wholesomeness = random.randint(10, 30)
+class Food(EmptyObject):
 
-        self.__durability = random.randint(50, 101)
+    def __init__(self, pk, position):
+        super(Food, self).__init__(pk, position)
+
+        self.wholesomeness = random.randint(40, 61)
+
+        self.__durability = random.randint(80, 101)
+
+    def food_simulation(self, board):
+        self.decomposition()
+
+        if self.__durability <= 0:
+            board.remove_object_from_board(self)
 
     def decomposition(self):
         self.__durability -= 5
-        if self.__durability <= 0:
-            del self
 
 
 class Meat(Food):
 
-    # def __init__(self, wholesomeness, kind):
-    #     super().__init__(wholesomeness)
-    #     self.kind = kind
-    pass
+    def __init__(self, pk, position):
+        super(Meat, self).__init__(pk, position)
+        self.kind = 'meat'
+        self.abbr = 'M'
 
 
 class Plant(Food):
 
-    # def __init__(self, wholesomeness, kind):
-    #     super().__init__(wholesomeness)
-    #     self.kind = kind
-    pass
+    def __init__(self, pk, position):
+        super(Plant, self).__init__(pk, position)
+        self.kind = 'plant'
+        self.abbr = 'P'
+
